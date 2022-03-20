@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+set -eo pipefail
+
+echo "---> Details Buildpack"
+
+layers_dir="$1"
+platform_dir="$2"
+plan_path="$3"
+
+detailslayer="$layers_dir"/details
+mkdir -p "$detailslayer"/bin
+
+echo "---> Buildpack argument details"
+echo "layers_dir=$layers_dir"
+echo "platform_dir=$platform_dir"
+echo "plan_path=$plan_path"
+
+echo "---> User details"
+echo "id=$(id)"
+
+echo "---> Working directory details"
+echo "pwd=$(pwd)"
+echo "ls -al"
+ls -al
+
+echo "---> Build application"
+cp main.sh $detailslayer/bin/
+chmod 755 $detailslayer/bin/main.sh
+echo -e '[types]\nlaunch = true' > "$layers_dir/details.toml"
+
+# Set default start command
+cat > "$layers_dir/launch.toml" << EOL
+[[processes]]
+type = "worker"
+command = "main.sh"
+default = true
+EOL

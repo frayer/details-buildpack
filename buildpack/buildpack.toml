@@ -1,0 +1,11 @@
+api = "0.6"
+
+[buildpack]
+  id = "frayer/details"
+  version = "0.0.1"
+
+[[stacks]]
+  id = "io.buildpacks.samples.stacks.bionic"
+
+[[stacks]]
+  id = "io.buildpacks.stacks.bionic"
