@@ -15,6 +15,9 @@ echo "layers_dir=$layers_dir"
 echo "platform_dir=$platform_dir"
 echo "plan_path=$plan_path"
 
+echo "---> Buildpack environment variables"
+printenv
+
 echo "---> User details"
 echo "id=$(id)"
 
@@ -22,6 +25,11 @@ echo "---> Working directory details"
 echo "pwd=$(pwd)"
 echo "ls -al"
 ls -al
+
+echo "---> Attempt to write to application directory"
+if [[ ! -z "${ATTEMPT_WRITE}" ]]; then
+  echo 'hello world' > message.txt
+fi
 
 echo "---> Build application"
 cp main.sh $detailslayer/bin/
